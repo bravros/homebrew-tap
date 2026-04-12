@@ -37,15 +37,6 @@ class Bravros < Formula
     end
   end
 
-  verify do
-    pubkey = <<~EOS
-      RWQqHlahq4RjNnCasO/8yMsgtLGfdHejILKMxxpsulIs1rII6IgMO26G
-    EOS
-    system Formula["minisign"].opt_bin/"minisign", "-Vm",
-           "#{HOMEBREW_PREFIX}/opt/bravros/checksums.txt",
-           "-P", pubkey.strip
-  end
-
   def caveats
     <<~EOS
       Run `bravros activate <license-key>` to install skills, hooks, and configure Claude Code.
