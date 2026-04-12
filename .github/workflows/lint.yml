@@ -1,0 +1,32 @@
+name: Lint Formula
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  lint:
+    name: brew audit + forbidden-content check
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Audit formula (strict)
+        run: brew audit --strict Formula/bravros.rb
+
+      - name: Check for forbidden content
+        run: |
+          if grep -qE '\b(skills|templates|hooks\.json|settings\.json)\b' Formula/bravros.rb; then
+            echo "ERROR: Formula contains forbidden content — see Phase 7 lint rule"
+            echo "The following matches were found:"
+            grep -nE '\b(skills|templates|hooks\.json|settings\.json)\b' Formula/bravros.rb
+            exit 1
+          fi
+          echo "OK: No forbidden content found in formula."
