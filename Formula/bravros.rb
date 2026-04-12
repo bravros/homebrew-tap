@@ -5,21 +5,21 @@
 class Bravros < Formula
   desc "Bravros — SDLC pipeline for Claude Code"
   homepage "https://bravros.dev"
-  version "1.10.4"
+  version "2.0.0"
   license "Proprietary"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/bravros/bravros/releases/download/v1.10.4/bravros-darwin-amd64.tar.gz"
-      sha256 "0a783abfa7bb4cad30e96e46dffaee3793566c85ba1cd99be3fa23b300609ad8"
+      url "https://github.com/bravros/bravros/releases/download/v2.0.0/bravros-darwin-amd64.tar.gz"
+      sha256 "90a7201cbc44e4a2afb1a9bb9782f7fac8915502115b80d5035c9dc6784bda87"
 
       define_method(:install) do
         bin.install "bravros"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/bravros/bravros/releases/download/v1.10.4/bravros-darwin-arm64.tar.gz"
-      sha256 "a6c45529bcd34ad0b8fc1ad8ba730f173892ccc8f8921566f6f682d31b8168dd"
+      url "https://github.com/bravros/bravros/releases/download/v2.0.0/bravros-darwin-arm64.tar.gz"
+      sha256 "8db4d0151f202b0e2ec185e29834c12ddf678dbff553de636a32290c9767d5dc"
 
       define_method(:install) do
         bin.install "bravros"
@@ -29,15 +29,32 @@ class Bravros < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/bravros/bravros/releases/download/v1.10.4/bravros-linux-amd64.tar.gz"
-      sha256 "ee64bad16ea1b091c953346e149e3e2899940bf9748c19e3838569d3e3e16feb"
+      url "https://github.com/bravros/bravros/releases/download/v2.0.0/bravros-linux-amd64.tar.gz"
+      sha256 "62bfe9aeb4475340ca86c3b6d5a68de62338f999bfeebd92c9dc99cd1dc0efb6"
       define_method(:install) do
         bin.install "bravros"
       end
     end
   end
 
+  verify do
+    pubkey = <<~EOS
+      RWQqHlahq4RjNnCasO/8yMsgtLGfdHejILKMxxpsulIs1rII6IgMO26G
+    EOS
+    system Formula["minisign"].opt_bin/"minisign", "-Vm",
+           "#{HOMEBREW_PREFIX}/opt/bravros/checksums.txt",
+           "-P", pubkey.strip
+  end
+
+  def caveats
+    <<~EOS
+      Run `bravros activate <license-key>` to install skills, hooks, and configure Claude Code.
+      Visit https://app.bravros.dev for your license key.
+    EOS
+  end
+
   test do
     system "#{bin}/bravros", "version"
+    assert_match "Bravros", shell_output("#{bin}/bravros version")
   end
 end
