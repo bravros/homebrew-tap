@@ -5,21 +5,21 @@
 class Bravros < Formula
   desc "Bravros — SDLC pipeline for Claude Code"
   homepage "https://bravros.dev"
-  version "2.0.1"
+  version "2.1.0"
   license "Proprietary"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/bravros/bravros/releases/download/v2.0.1/bravros-darwin-amd64.tar.gz"
-      sha256 "b6b98e3c17fcfb1ff4173c671ffaf1f1fe7d732f6570ade9d9ebb8343ce9dbbc"
+      url "https://github.com/bravros/bravros/releases/download/v2.1.0/bravros-darwin-amd64.tar.gz"
+      sha256 "99bbdfec983bebf54a6bffdab3da5ba4fb9c7a7f90408f4aaa0b799a5d9fde58"
 
       define_method(:install) do
         bin.install "bravros"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/bravros/bravros/releases/download/v2.0.1/bravros-darwin-arm64.tar.gz"
-      sha256 "b3645ced544389af9cfb53397f67c918fbde3b1f2f30d162395f2eac4254a79f"
+      url "https://github.com/bravros/bravros/releases/download/v2.1.0/bravros-darwin-arm64.tar.gz"
+      sha256 "f98f32e8d3ad7212658414b0aa472f6d88b803c2b3eb3f76ce2482e3f8b3b83d"
 
       define_method(:install) do
         bin.install "bravros"
@@ -29,8 +29,8 @@ class Bravros < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/bravros/bravros/releases/download/v2.0.1/bravros-linux-amd64.tar.gz"
-      sha256 "a6595f41c8caa8f1ecaac5876d64afe4e61ff0fb40c4d8601bb95f00248d032f"
+      url "https://github.com/bravros/bravros/releases/download/v2.1.0/bravros-linux-amd64.tar.gz"
+      sha256 "4d661fd4bc0a1823a86dcc400b1da5f417152b25325c4fd6814789c522056aa8"
       define_method(:install) do
         bin.install "bravros"
       end
@@ -46,6 +46,8 @@ class Bravros < Formula
 
   test do
     system "#{bin}/bravros", "version"
-    assert_match "Bravros", shell_output("#{bin}/bravros version")
+    # Match the actual lowercase "bravros vX.Y.Z" emitted by `bravros version`.
+    # The previous "Bravros" (capital B) was case-sensitive and broke `brew test`.
+    assert_match(/^bravros v\d+\.\d+\.\d+/, shell_output("#{bin}/bravros version"))
   end
 end
