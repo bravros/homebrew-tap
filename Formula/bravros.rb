@@ -5,21 +5,21 @@
 class Bravros < Formula
   desc "Bravros — SDLC pipeline for Claude Code"
   homepage "https://bravros.dev"
-  version "2.3.0"
+  version "2.3.1"
   license "Proprietary"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/bravros/bravros/releases/download/v2.3.0/bravros-darwin-amd64.tar.gz"
-      sha256 "d32e52d73104bf32b44726f8c5306c0277ec27bf01c4de378bfaf1a9d18803ff"
+      url "https://github.com/bravros/bravros/releases/download/v2.3.1/bravros-darwin-amd64.tar.gz"
+      sha256 "8ba846a5ab8ce01250c3afb05aa7c76b0ee949e41424578e8db375aebb3e0ce0"
 
       define_method(:install) do
         bin.install "bravros"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/bravros/bravros/releases/download/v2.3.0/bravros-darwin-arm64.tar.gz"
-      sha256 "8f1d94128dbdd780735616e647986eafcb213f0f64b7ddb8e1718fd005f90d2d"
+      url "https://github.com/bravros/bravros/releases/download/v2.3.1/bravros-darwin-arm64.tar.gz"
+      sha256 "9e56b4597550a0369d845232958c7e6970dec030242999e6d614034ece143f95"
 
       define_method(:install) do
         bin.install "bravros"
@@ -29,8 +29,8 @@ class Bravros < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/bravros/bravros/releases/download/v2.3.0/bravros-linux-amd64.tar.gz"
-      sha256 "43e41e0fe0b88cc2116eabf7086f5264c35ea4d1c9a4d85c2c7fb186b916ba8c"
+      url "https://github.com/bravros/bravros/releases/download/v2.3.1/bravros-linux-amd64.tar.gz"
+      sha256 "19d7b3f32804b227864ae2860f7638388f0b8443fef0638ea584faf72f5d80f2"
       define_method(:install) do
         bin.install "bravros"
       end
