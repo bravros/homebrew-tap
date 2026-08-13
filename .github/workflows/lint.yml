@@ -18,14 +18,23 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
+      # `brew audit` no longer accepts a file path — "Calling `brew audit [path ...]`
+      # is disabled! Use `brew audit [name ...]` instead." The formula therefore has to
+      # be reachable as a real tap before it can be audited by name.
+      - name: Link this checkout as a tap
+        run: |
+          TAP_DIR="$(brew --repository)/Library/Taps/bravros/homebrew-tap"
+          mkdir -p "$(dirname "$TAP_DIR")"
+          rm -rf "$TAP_DIR"
+          ln -s "$GITHUB_WORKSPACE" "$TAP_DIR"
+
       - name: Audit formula (strict)
-        run: brew audit --strict Formula/bravros.rb
+        run: brew audit --strict --formula bravros/tap/bravros
 
       - name: Check for forbidden content
         run: |
           if grep -qE '\b(skills|templates|hooks\.json|settings\.json)\b' Formula/bravros.rb; then
-            echo "ERROR: Formula contains forbidden content — see Phase 7 lint rule"
-            echo "The following matches were found:"
+            echo "ERROR: Formula contains forbidden content — the tap ships the binary only"
             grep -nE '\b(skills|templates|hooks\.json|settings\.json)\b' Formula/bravros.rb
             exit 1
           fi
