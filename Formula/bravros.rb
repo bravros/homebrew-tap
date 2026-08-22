@@ -5,21 +5,21 @@
 class Bravros < Formula
   desc "Bravros — free, public, host-neutral agent toolkit"
   homepage "https://bravros.dev"
-  version "2.17.0"
+  version "2.18.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/bravros/bravros/releases/download/v2.17.0/bravros-darwin-amd64.tar.gz"
-      sha256 "0ca03c56aee3a90c28d12fb0b6e7f3bcdeb9ddc49ebd6d12610eb7429c361b38"
+      url "https://github.com/bravros/bravros/releases/download/v2.18.0/bravros-darwin-amd64.tar.gz"
+      sha256 "d300641859867800ca8377e4f4b53a6daeaab130ccf9ebd52aba5f327280b9d0"
 
       define_method(:install) do
         bin.install "bravros"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/bravros/bravros/releases/download/v2.17.0/bravros-darwin-arm64.tar.gz"
-      sha256 "8b9b8ff642a6c0e83261e25582da3ba41cd76d3d1e48d2c8d4ceb0f9af167859"
+      url "https://github.com/bravros/bravros/releases/download/v2.18.0/bravros-darwin-arm64.tar.gz"
+      sha256 "18dbe09786b6b9919e58f9b066378c6c212cbe6bcb5a17560c4f310b2c6c6c87"
 
       define_method(:install) do
         bin.install "bravros"
@@ -29,15 +29,15 @@ class Bravros < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/bravros/bravros/releases/download/v2.17.0/bravros-linux-amd64.tar.gz"
-      sha256 "c3b906176c4daf7b2ee5e1f3be38ae9e5b326638c506c576534b75189a650ecd"
+      url "https://github.com/bravros/bravros/releases/download/v2.18.0/bravros-linux-amd64.tar.gz"
+      sha256 "be2ef0a7340bd6a849b5e58c374f6f861829f1b4e47676d6b922e1ecc9e55f1a"
       define_method(:install) do
         bin.install "bravros"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/bravros/bravros/releases/download/v2.17.0/bravros-linux-arm64.tar.gz"
-      sha256 "a077280549565a5bb04d2238b6965eda53136c36a6eafdf3f0ddd49803e791ef"
+      url "https://github.com/bravros/bravros/releases/download/v2.18.0/bravros-linux-arm64.tar.gz"
+      sha256 "535d1e54688c68c7973424dc723913532a39bd8b7b56840b3337a90cb12b2542"
       define_method(:install) do
         bin.install "bravros"
       end
